@@ -45,7 +45,6 @@ let addContact = () => {
     }
 }
 
-
 let validContact = (_AddressBook) => {
     let patternName = RegExp('^([A-Z]{1}[a-z]{2,})$');
     let patternEmail = RegExp('^[0-9a-zA-Z+-._]+@[-+_.0-9a-zA-Z]{1,}.[a-zA-Z]{2,3}.([a-zA-z]{2,3})*$');
@@ -101,8 +100,6 @@ let viewAddressBook = () => {
         console.log(NewAddressBook[i].toString());
     }
 }
-
-
 
 let editAddressBook = () => {
     let patternName = RegExp('^([A-Z]{1}[a-z]{2,})$');
@@ -216,9 +213,6 @@ let editAddressBook = () => {
     }
 }
 
-
-
-
 let deleteContact = () => {
     console.log("Enter the Contact Name you want to delete");
     let contactName = String(readline.question());
@@ -236,10 +230,13 @@ let deleteContact = () => {
     }
 }
 
+let getNumOfContacts = () => {
+    return NewAddressBook.length;
+}
 
 let input;
 do {
-    console.log("1. Add Contact\n2. View Contact\n3. Edit Contact\n4. Delete Contact\n5. Exit");
+    console.log("1. Add Contact\n2. View Contact\n3. Edit Contact\n4. Delete Contact\n5. Get Count of Contact\n6. Exit");
     input = Number(readline.question());
     switch (input) {
         case 1:
@@ -258,7 +255,12 @@ do {
             deleteContact();
             break;
 
+        case 5:
+            console.log("Number of Contact in Addressbook : " + getNumOfContacts());
+            break;
+
         default:
             break;
     }
-} while (input != 5);
+} while (input != 6);
+
