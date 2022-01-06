@@ -38,7 +38,61 @@ let addContact = () => {
     let email = String(readline.question());
 
     let contact = new AddressBook(fName,lName,add,city,state,zip,phoneNumber,email);
-    console.log(contact.toString());
+    
+    if (validContact(contact)) {
+        console.log(contact.toString());
+    }
+}
+
+
+let validContact = (_AddressBook) => {
+    let patternName = RegExp('^([A-Z]{1}[a-z]{2,})$');
+    let patternEmail = RegExp('^[0-9a-zA-Z+-._]+@[-+_.0-9a-zA-Z]{1,}.[a-zA-Z]{2,3}.([a-zA-z]{2,3})*$');
+    let patternPhone = RegExp('^([0-9]{1,2})\\s([0-9]{10})$');
+    let patternZip = RegExp('^[1-9]{1}[0-9]{2}\\s{0,1}[0-9]{3}$');
+    let patternAddCityState = RegExp('^[A-Z]{1}[a-z]{3,}$');
+    let isValid = true;
+    
+    if (patternName.test(_AddressBook.firstName) == false) {
+        isValid = false;
+        console.log("Invalid FirstName");    
+    }
+
+    if (patternName.test(_AddressBook.lastName) == false) {
+        isValid = false;
+        console.log("Invalid LastName");    
+    }
+
+    if (patternAddCityState.test(_AddressBook.address) == false) {
+        isValid = false;
+        console.log("Invalid Address");    
+    }
+
+    if (patternAddCityState.test(_AddressBook.city) == false) {
+        isValid = false;
+        console.log("Invalid City");
+    }
+    
+    if (patternAddCityState.test(_AddressBook.state) == false) {
+        isValid = false;
+        console.log("Invalid State");
+    }
+
+    if (patternZip.test(_AddressBook.zip) == false) {
+        isValid = false;
+        console.log("Invalid Zip");    
+    }
+
+    if (patternPhone.test(_AddressBook.phoneNumber) == false) {
+        isValid = false;
+        console.log("Invalid Phone Number");    
+    }
+
+    if (patternEmail.test(_AddressBook.email) == false) {
+        isValid = false;
+        console.log("Invalid Email");
+    }
+    return isValid;
 }
 
 addContact();
