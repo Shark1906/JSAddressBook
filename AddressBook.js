@@ -112,6 +112,7 @@ let editAddressBook = () => {
     let patternAddCityState = RegExp('^[A-Z]{1}[a-z]{3,}$');
     console.log("Enter the Contact Name you want to edit");
     let contactName = String(readline.question());
+    let isFound = false;
 
     for (let i = 0; i < NewAddressBook.length; i++) {
         if (NewAddressBook[i].firstName + NewAddressBook[i].lastName == contactName) {
@@ -205,13 +206,40 @@ let editAddressBook = () => {
                         break;
                 }
             } while (choice != 9);
+            isFound = true;
         }
+    }
+    if (isFound) {
+        console.log("Contact Updated Successfully");
+    }else{
+        console.log("Contact Not Found");
     }
 }
 
+
+
+
+let deleteContact = () => {
+    console.log("Enter the Contact Name you want to delete");
+    let contactName = String(readline.question());
+    let isFound = false;
+    for (let i = 0; i < NewAddressBook.length; i++) {
+        if (NewAddressBook[i].firstName + NewAddressBook[i].lastName == contactName) {
+            NewAddressBook.splice(i, 1);
+            isFound = true;
+        }
+    }
+    if (isFound) {
+        console.log("Contact Deleted Sucessfully");
+    }else{
+        console.log("Contact Not Found");
+    }
+}
+
+
 let input;
 do {
-    console.log("1. Add Contact\n2. View Contact\n3. Edit Contact\n4. Exit");
+    console.log("1. Add Contact\n2. View Contact\n3. Edit Contact\n4. Delete Contact\n5. Exit");
     input = Number(readline.question());
     switch (input) {
         case 1:
@@ -226,8 +254,11 @@ do {
             editAddressBook();
             break;
 
+        case 4:
+            deleteContact();
+            break;
+
         default:
             break;
     }
-    
-} while (input != 4);
+} while (input != 5);
