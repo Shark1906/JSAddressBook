@@ -1,5 +1,6 @@
 const readline = require("readline-sync");
 
+let NewAddressBook = new Array();
 class AddressBook{
 
     constructor(firstName,lastName,address,city,state,zip,phoneNumber,email) {
@@ -38,9 +39,9 @@ let addContact = () => {
     let email = String(readline.question());
 
     let contact = new AddressBook(fName,lName,add,city,state,zip,phoneNumber,email);
-    
+
     if (validContact(contact)) {
-        console.log(contact.toString());
+        NewAddressBook.push(contact);
     }
 }
 
@@ -95,4 +96,11 @@ let validContact = (_AddressBook) => {
     return isValid;
 }
 
+let viewAddressBook = () => {
+    for (let i = 0; i < NewAddressBook.length; i++) {
+        console.log(NewAddressBook[i].toString()); 
+    }
+}
+
 addContact();
+viewAddressBook();
