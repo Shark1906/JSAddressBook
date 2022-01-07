@@ -40,7 +40,7 @@ let addContact = () => {
 
     let contact = new AddressBook(fName, lName, add, city, state, zip, phoneNumber, email);
 
-    if (validContact(contact) && checkDuplicate(fName+lName)) {
+    if (validContact(contact) && !checkDuplicate(fName+lName)) {
         NewAddressBook.push(contact);
     }
 }
@@ -122,7 +122,7 @@ let editAddressBook = () => {
                     case 1:
                         console.log("Enter the new FirstName");
                         let newfName = String(readline.question());
-                        if (patternName.test(newfName) && checkDuplicate(newfName+NewAddressBook[i].lastName)) {
+                        if (patternName.test(newfName) && !checkDuplicate(newfName+NewAddressBook[i].lastName)) {
                             NewAddressBook[i].firstName = newfName;
                         }else{
                             console.log("Invalid FirstName");
@@ -235,21 +235,42 @@ let getNumOfContacts = () => {
 }
 
 let checkDuplicate = (fullName) => {
-    let isDuplicate = true;
+    let isDuplicate = false;
     for (let i = 0; i < NewAddressBook.length; i++) {
         if(NewAddressBook[i].firstName + NewAddressBook[i].lastName == fullName){
-            isDuplicate = false;
+            isDuplicate = true;
         }
     }
-    if(isDuplicate == false){
+    if(isDuplicate == true){
         console.log("Contact Already Exists with this name");
     }
     return isDuplicate;
 }
 
+let searchPersoninCity = () => {
+    let personinCity = new Array();
+    console.log("Enter the Contact Name");
+    let contactName = String(readline.question());
+    console.log("Enter the Contact City");
+    let contactCity = String(readline.question());
+    for (let i = 0; i < NewAddressBook.length; i++) {
+        if(NewAddressBook[i].firstName + NewAddressBook[i].lastName == contactName && NewAddressBook[i].city == contactCity){
+            personinCity.push(NewAddressBook[i])
+        }
+    }
+    if (personinCity.length > 0) {
+        for (let i = 0; i < personinCity.length; i++) {
+            console.log(personinCity[i].toString());
+        }
+    }else{
+        console.log("No Person in the city");
+    }
+    
+}
+
 let input;
 do {
-    console.log("1. Add Contact\n2. View Contact\n3. Edit Contact\n4. Delete Contact\n5. Get Count of Contact\n6. Exit");
+    console.log("1. Add Contact\n2. View Contact\n3. Edit Contact\n4. Delete Contact\n5. Get Count of Contact\n6. Search Person In City\n7. Exit");
     input = Number(readline.question());
     switch (input) {
         case 1:
@@ -272,8 +293,12 @@ do {
             console.log("Number of Contact in Addressbook : " + getNumOfContacts());
             break;
 
+        case 6:
+            searchPersoninCity();
+            break;
+
         default:
             break;
     }
-} while (input != 6);
+} while (input != 7);
 
