@@ -40,7 +40,7 @@ let addContact = () => {
 
     let contact = new AddressBook(fName, lName, add, city, state, zip, phoneNumber, email);
 
-    if (validContact(contact)) {
+    if (validContact(contact) && checkDuplicate(fName)) {
         NewAddressBook.push(contact);
     }
 }
@@ -122,7 +122,7 @@ let editAddressBook = () => {
                     case 1:
                         console.log("Enter the new FirstName");
                         let newfName = String(readline.question());
-                        if (patternName.test(newfName)) {
+                        if (patternName.test(newfName) && checkDuplicate(newfName)) {
                             NewAddressBook[i].firstName = newfName;
                         }else{
                             console.log("Invalid FirstName");
@@ -232,6 +232,19 @@ let deleteContact = () => {
 
 let getNumOfContacts = () => {
     return NewAddressBook.length;
+}
+
+let checkDuplicate = (fName) => {
+    let isDuplicate = true;
+    for (let i = 0; i < NewAddressBook.length; i++) {
+        if(NewAddressBook[i].firstName == fName){
+            isDuplicate = false;
+        }
+    }
+    if(isDuplicate == false){
+        console.log("Contact Already Exists");
+    }
+    return isDuplicate;
 }
 
 let input;
