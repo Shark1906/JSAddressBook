@@ -40,7 +40,7 @@ let addContact = () => {
 
     let contact = new AddressBook(fName, lName, add, city, state, zip, phoneNumber, email);
 
-    if (validContact(contact) && checkDuplicate(fName)) {
+    if (validContact(contact) && checkDuplicate(fName+lName)) {
         NewAddressBook.push(contact);
     }
 }
@@ -122,7 +122,7 @@ let editAddressBook = () => {
                     case 1:
                         console.log("Enter the new FirstName");
                         let newfName = String(readline.question());
-                        if (patternName.test(newfName) && checkDuplicate(newfName)) {
+                        if (patternName.test(newfName) && checkDuplicate(newfName+NewAddressBook[i].lastName)) {
                             NewAddressBook[i].firstName = newfName;
                         }else{
                             console.log("Invalid FirstName");
@@ -132,7 +132,7 @@ let editAddressBook = () => {
                     case 2:
                         console.log("Enter the new LastName");
                         let newlName = String(readline.question());
-                        if (patternName.test(newlName)) {
+                        if (patternName.test(newlName) && checkDuplicate(NewAddressBook[i].firstName+newlName)) {
                             NewAddressBook[i].lastName = newlName;
                         }else{
                             console.log("Invalid LastName");
@@ -234,15 +234,15 @@ let getNumOfContacts = () => {
     return NewAddressBook.length;
 }
 
-let checkDuplicate = (fName) => {
+let checkDuplicate = (fullName) => {
     let isDuplicate = true;
     for (let i = 0; i < NewAddressBook.length; i++) {
-        if(NewAddressBook[i].firstName == fName){
+        if(NewAddressBook[i].firstName + NewAddressBook[i].lastName == fullName){
             isDuplicate = false;
         }
     }
     if(isDuplicate == false){
-        console.log("Contact Already Exists");
+        console.log("Contact Already Exists with this name");
     }
     return isDuplicate;
 }
